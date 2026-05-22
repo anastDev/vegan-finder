@@ -1,0 +1,33 @@
+package com.anastDev.vegan_finder.dto;
+
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+public class RestaurantInsertDTO {
+
+    @NotBlank
+    @Size(max = 200)
+    private String name;
+
+    @NotBlank
+    @Size(max = 100)
+    private String address;
+
+    @DecimalMin(value = "-90.0")
+    @DecimalMax(value = "90.0")
+    private Double lat;
+
+    @DecimalMin(value = "-180.0")
+    @DecimalMax(value = "180.0")
+    private Double lng;
+
+    @NotBlank
+    private Boolean veganFriendly;
+}
