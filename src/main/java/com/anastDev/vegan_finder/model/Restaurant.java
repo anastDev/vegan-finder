@@ -21,10 +21,15 @@ public class Restaurant extends AbstractEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
+    private String googlePlaceId;
+
     private String name;
     private String address;
     private Double lat;
     private Double lng;
+    private Double rating;
+    private String websiteUri;
     private Boolean veganFriendly;
 
     @OneToMany(mappedBy = "restaurant")

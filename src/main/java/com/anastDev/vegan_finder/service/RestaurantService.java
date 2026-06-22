@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -141,9 +142,10 @@ public class RestaurantService implements IRestaurantService {
                                 "places.location,places.rating,places.userRatingCount," +
                                 "places.websiteUri,places.currentOpeningHours,places.priceLevel," +
                                 "places.nationalPhoneNumber,places.servesVegetarianFood," +
-                                "places.servesCoffee,places.servesBreakfast" +
+                                "places.servesCoffee,places.servesBreakfast," +
                                 "places.servesCocktails,places.servesDinner")
                 .header("X-Goog-Api-Key", apiKey)
+                .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(requestBody)
                 .retrieve()
                 .bodyToMono(RestaurantApiResponse.class)

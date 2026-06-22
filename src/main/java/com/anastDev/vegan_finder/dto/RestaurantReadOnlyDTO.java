@@ -19,6 +19,8 @@ public class RestaurantReadOnlyDTO {
     private String address;
     private Double lat;
     private Double lng;
+    private Double rating;
+    private String websiteUri;
     private Boolean isVeganFriendly;
     private Instant createdAt;
     private Instant updatedAt;

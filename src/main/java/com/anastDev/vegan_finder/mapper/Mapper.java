@@ -31,6 +31,8 @@ public class Mapper {
                 restaurant.getAddress(),
                 restaurant.getLat(),
                 restaurant.getLng(),
+                restaurant.getRating(),
+                restaurant.getWebsiteUri(),
                 restaurant.getVeganFriendly(),
                 restaurant.getCreatedAt(),
                 restaurant.getUpdatedAt()
@@ -80,7 +82,10 @@ public class Mapper {
                 dto.getUser().getLastname(),
                 dto.getRestaurant().getName(),
                 dto.getRestaurant().getAddress(),
+                dto.getRestaurant().getRating(),
+                dto.getRestaurant().getWebsiteUri(),
                 dto.getRestaurant().getVeganFriendly()
         );
     }
+
 }

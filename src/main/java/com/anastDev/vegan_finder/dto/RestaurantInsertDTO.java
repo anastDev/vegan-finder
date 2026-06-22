@@ -28,6 +28,13 @@ public class RestaurantInsertDTO {
     @DecimalMax(value = "180.0")
     private Double lng;
 
+    @NotNull
+    private Double rating;
+
+    @NotBlank
+    @Size(max = 200)
+    private String websiteUri;
+
     @NotBlank
     private Boolean veganFriendly;
 }

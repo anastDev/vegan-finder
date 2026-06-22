@@ -17,5 +17,7 @@ public class SavedRestaurantReadOnlyDTO{
     private String lastname;
     private String restaurantName;
     private String address;
+    private Double rating;
+    private String websiteUri;
     private Boolean veganFriendly;
 }
