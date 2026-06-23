@@ -50,7 +50,7 @@ public class User extends AbstractEntity {
     private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<SavedRestaurant> savedRestaurants = new HashSet<>();
+    private final Set<SavedRestaurant> savedRestaurants = new HashSet<>();
 
     public String getFullname() {
         return firstname + " " + lastname;

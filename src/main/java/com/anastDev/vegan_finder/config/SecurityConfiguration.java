@@ -1,5 +1,8 @@
-package com.anastDev.vegan_finder.security;
+package com.anastDev.vegan_finder.config;
 
+import com.anastDev.vegan_finder.security.CustomAccessDeniedHandler;
+import com.anastDev.vegan_finder.security.CustomAuthenticationEntryPoint;
+import com.anastDev.vegan_finder.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,6 +43,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req -> req
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/restaurants/nearby").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/restaurants/photo").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(
                                 "/swagger-ui.html",

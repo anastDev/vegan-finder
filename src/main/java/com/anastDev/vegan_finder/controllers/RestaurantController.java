@@ -27,4 +27,14 @@ public class RestaurantController {
         List<PlaceResultDTO> results = restaurantService.findVegetarianRestaurantNearby(lat, lng, radius);
         return ResponseEntity.ok(results);
     }
+
+    @GetMapping("/photo")
+    public ResponseEntity<String> getPhotoUri(
+            @RequestParam String photoName,
+            @RequestParam(defaultValue = "400") int maxWidth
+    ) {
+        String uri = restaurantService.fetchPhotoUri(photoName, maxWidth);
+        return ResponseEntity.ok(uri);
+    }
+
 }

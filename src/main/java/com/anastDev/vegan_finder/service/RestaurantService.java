@@ -35,7 +35,6 @@ public class RestaurantService implements IRestaurantService {
     @Value("${google.places.api.key}")
     private String apiKey;
 
-
     @Value("${google.places.base-url}")
     private String baseUrl;
 
@@ -123,7 +122,7 @@ public class RestaurantService implements IRestaurantService {
 
         Map<String, Object> requestBody = Map.of(
                 "includedTypes", List.of("restaurant"),
-                "maxResultCount", 20,
+                "maxResultCount", 10,
                 "locationRestriction", Map.of(
                         "circle", Map.of(
                                 "center", Map.of(
@@ -143,7 +142,7 @@ public class RestaurantService implements IRestaurantService {
                                 "places.websiteUri,places.currentOpeningHours,places.priceLevel," +
                                 "places.nationalPhoneNumber,places.servesVegetarianFood," +
                                 "places.servesCoffee,places.servesBreakfast," +
-                                "places.servesCocktails,places.servesDinner")
+                                "places.servesCocktails,places.servesDinner,places.photos")
                 .header("X-Goog-Api-Key", apiKey)
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(requestBody)
@@ -157,6 +156,22 @@ public class RestaurantService implements IRestaurantService {
         return response.places().stream()
                 .filter(place -> Boolean.TRUE.equals(place.servesVegetarianFood()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public String fetchPhotoUri(String photoName, int maxWidth) {
+       PhotoResponse response = webClient.get()
+                .uri(baseUrl + "/" + photoName + "/media"
+                        + "?maxWidthPx=" + maxWidth
+                        + "&skipHttpRedirect=true"
+                        + "&key=" + apiKey)
+                .retrieve()
+                .bodyToMono(PhotoResponse.class)
+                .block();
+
+        if (response == null || response.photoUri() == null) return null;
+
+        return response.photoUri();
     }
 
 }

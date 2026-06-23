@@ -2,6 +2,8 @@ package com.anastDev.vegan_finder.dto;
 
 import lombok.Builder;
 
+import java.util.List;
+
 @Builder
 public record PlaceResultDTO(
         String id,
@@ -11,6 +13,7 @@ public record PlaceResultDTO(
         Double rating,
         Integer userRatingCount,
         String websiteUri,
+        List<Photo> photos,
         String priceLevel,
         OpeningHours currentOpeningHours,
         String nationalPhoneNumber,
@@ -21,6 +24,8 @@ public record PlaceResultDTO(
         Boolean servesCocktails,
         Boolean servesDinner
 ) {
+    public record Photo(String name, Integer widthPX, Integer heightPx){}
+
     public record DisplayName(String text) {}
 
     public record Location(Double latitude, Double longitude) {}

@@ -18,4 +18,5 @@ public interface IRestaurantService {
     void deleteById(Long id) throws EntityNotFoundException;
     Page<RestaurantReadOnlyDTO> getRestaurants(int page, int size);
     List<PlaceResultDTO> findVegetarianRestaurantNearby(double lat, double lng, int radiusMetres);
+    String fetchPhotoUri(String photoName, int maxWidth);
 }
