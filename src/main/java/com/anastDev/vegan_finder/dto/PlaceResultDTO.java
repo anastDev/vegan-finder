@@ -24,7 +24,13 @@ public record PlaceResultDTO(
         Boolean servesCocktails,
         Boolean servesDinner
 ) {
-    public record Photo(String name, Integer widthPX, Integer heightPx){}
+    public record Photo(String name, Integer widthPx, Integer heightPx,  List<AuthorAttribution> authorAttributions){}
+
+    public record AuthorAttribution(
+            String displayName,
+            String uri,
+            String photoUri
+    ) {}
 
     public record DisplayName(String text) {}
 

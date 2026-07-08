@@ -1,5 +1,6 @@
 package com.anastDev.vegan_finder.controllers;
 
+import com.anastDev.vegan_finder.dto.PhotoResponse;
 import com.anastDev.vegan_finder.dto.PlaceResultDTO;
 import com.anastDev.vegan_finder.service.RestaurantService;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ public class RestaurantController {
     public ResponseEntity<List<PlaceResultDTO>> getNearbyRestaurants(
             @RequestParam double lat,
             @RequestParam double lng,
-            @RequestParam(defaultValue = "2000") int radius
+            @RequestParam(defaultValue = "20000") int radius
     ) {
         List<PlaceResultDTO> results = restaurantService.findVegetarianRestaurantNearby(lat, lng, radius);
         return ResponseEntity.ok(results);

@@ -16,6 +16,10 @@ public class VeganFinderApplication {
 
 	@Bean
 	public WebClient webClient() {
-		return WebClient.create();
+		return WebClient.builder()
+				.codecs(configurer -> configurer
+						.defaultCodecs()
+						.maxInMemorySize(5 * 1024 * 1024))
+				.build();
 	}
 }

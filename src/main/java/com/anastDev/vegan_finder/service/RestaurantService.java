@@ -19,9 +19,9 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -122,7 +122,8 @@ public class RestaurantService implements IRestaurantService {
 
         Map<String, Object> requestBody = Map.of(
                 "includedTypes", List.of("restaurant"),
-                "maxResultCount", 10,
+                "maxResultCount", 20,
+                "rankPreference", "DISTANCE",
                 "locationRestriction", Map.of(
                         "circle", Map.of(
                                 "center", Map.of(
@@ -153,9 +154,7 @@ public class RestaurantService implements IRestaurantService {
 
         if (response == null ) return List.of();
 
-        return response.places().stream()
-                .filter(place -> Boolean.TRUE.equals(place.servesVegetarianFood()))
-                .collect(Collectors.toList());
+        return new ArrayList<>(response.places());
     }
 
     @Override

@@ -42,8 +42,9 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/restaurants/nearby").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/restaurants/photo").permitAll()
+                        .requestMatchers(HttpMethod.GET,
+                                "/api/restaurants/nearby",
+                                "/api/restaurants/photo").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(
                                 "/swagger-ui.html",
@@ -57,7 +58,7 @@ public class SecurityConfiguration {
                 );
 //                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
 //                .authenticationProvider(authenticationProvider)
-//                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+////                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 //                .exceptionHandling((exceptions) -> exceptions
 //                        .authenticationEntryPoint(myCustomAuthenticationEntryPoint())
 //                        .accessDeniedHandler(myCustomAccessDeniedHandler()));
@@ -69,7 +70,7 @@ public class SecurityConfiguration {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:5173", "https://anastdev.github.io"));
-        configuration.setAllowedMethods(List.of("*"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
