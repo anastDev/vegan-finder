@@ -21,11 +21,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
+
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
 @EnableWebSecurity
@@ -44,7 +47,8 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.GET,
                                 "/api/restaurants/nearby",
-                                "/api/restaurants/photo").permitAll()
+                                "/api/restaurants/photo",
+                                "/api/restaurants/more").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(
                                 "/swagger-ui.html",
@@ -54,14 +58,14 @@ public class SecurityConfiguration {
                                 "/swagger-resources/**",
                                 "/configuration/**"
                         ).permitAll()
-//                        .requestMatchers("/**").authenticated()
-                );
-//                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
-//                .authenticationProvider(authenticationProvider)
-////                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-//                .exceptionHandling((exceptions) -> exceptions
-//                        .authenticationEntryPoint(myCustomAuthenticationEntryPoint())
-//                        .accessDeniedHandler(myCustomAccessDeniedHandler()));
+                       .requestMatchers("/**").authenticated()
+                )
+                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling((exceptions) -> exceptions
+                        .authenticationEntryPoint(myCustomAuthenticationEntryPoint())
+                        .accessDeniedHandler(myCustomAccessDeniedHandler()));
 
         return http.build();
     }

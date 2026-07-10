@@ -18,6 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,7 +144,8 @@ public class RestaurantService implements IRestaurantService {
                                 "places.websiteUri,places.currentOpeningHours,places.priceLevel," +
                                 "places.nationalPhoneNumber,places.servesVegetarianFood," +
                                 "places.servesCoffee,places.servesBreakfast," +
-                                "places.servesCocktails,places.servesDinner,places.photos")
+                                "places.servesCocktails,places.servesDinner," +
+                                "places.photos")
                 .header("X-Goog-Api-Key", apiKey)
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(requestBody)
@@ -168,9 +170,33 @@ public class RestaurantService implements IRestaurantService {
                 .bodyToMono(PhotoResponse.class)
                 .block();
 
-        if (response == null || response.photoUri() == null) return null;
+        if (response == null || response.photoUri() == null) return "";
 
         return response.photoUri();
+    }
+
+    @Override
+    public PlaceMoreDetailsDTO fetchMoreRestaurantDetails(String placeId) {
+        try {
+            PlaceMoreDetailsDTO response = webClient.get()
+                    .uri(baseUrl + "/places/" + placeId)
+                    .header("X-Goog-FieldMask", "reviews")
+                    .header("X-Goog-Api-Key", apiKey)
+                    .retrieve()
+                    .bodyToMono(PlaceMoreDetailsDTO.class)
+                    .block();
+
+            if (response == null) {
+                log.warn("Google returned empty body for placeId: {}", placeId);
+                return new PlaceMoreDetailsDTO(List.of());
+            }
+
+            return response;
+
+        } catch (WebClientResponseException e) {
+            log.error("Google API Error: {} | {}", e.getStatusCode(), e.getResponseBodyAsString());
+            throw e;
+        }
     }
 
 }

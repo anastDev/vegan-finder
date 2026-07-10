@@ -11,7 +11,9 @@ public record PlaceResultDTO(
         String formattedAddress,
         Location location,
         Double rating,
+        ReviewSummary reviewSummary,
         Integer userRatingCount,
+        EditorialSummary editorialSummary,
         String websiteUri,
         List<Photo> photos,
         String priceLevel,
@@ -24,6 +26,8 @@ public record PlaceResultDTO(
         Boolean servesCocktails,
         Boolean servesDinner
 ) {
+    public record EditorialSummary(String text) {}
+    public record ReviewSummary(String reviewSummary){}
     public record Photo(String name, Integer widthPx, Integer heightPx,  List<AuthorAttribution> authorAttributions){}
 
     public record AuthorAttribution(

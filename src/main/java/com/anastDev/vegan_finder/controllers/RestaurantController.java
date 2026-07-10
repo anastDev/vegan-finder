@@ -1,6 +1,6 @@
 package com.anastDev.vegan_finder.controllers;
 
-import com.anastDev.vegan_finder.dto.PhotoResponse;
+import com.anastDev.vegan_finder.dto.PlaceMoreDetailsDTO;
 import com.anastDev.vegan_finder.dto.PlaceResultDTO;
 import com.anastDev.vegan_finder.service.RestaurantService;
 import lombok.AllArgsConstructor;
@@ -38,4 +38,9 @@ public class RestaurantController {
         return ResponseEntity.ok(uri);
     }
 
-}
+    @GetMapping("/more")
+    public ResponseEntity<PlaceMoreDetailsDTO> getMoreDetails(@RequestParam String placeId) {
+        PlaceMoreDetailsDTO results = restaurantService.fetchMoreRestaurantDetails(placeId);
+        return ResponseEntity.ok(results);
+    }
+ }

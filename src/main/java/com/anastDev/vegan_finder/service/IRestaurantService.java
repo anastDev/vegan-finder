@@ -2,10 +2,7 @@ package com.anastDev.vegan_finder.service;
 
 import com.anastDev.vegan_finder.core.exceptions.EntityAlreadyExistsException;
 import com.anastDev.vegan_finder.core.exceptions.EntityNotFoundException;
-import com.anastDev.vegan_finder.dto.PlaceResultDTO;
-import com.anastDev.vegan_finder.dto.RestaurantInsertDTO;
-import com.anastDev.vegan_finder.dto.RestaurantReadOnlyDTO;
-import com.anastDev.vegan_finder.dto.RestaurantUpdateDTO;
+import com.anastDev.vegan_finder.dto.*;
 import com.anastDev.vegan_finder.model.Restaurant;
 import org.springframework.data.domain.Page;
 
@@ -19,4 +16,5 @@ public interface IRestaurantService {
     Page<RestaurantReadOnlyDTO> getRestaurants(int page, int size);
     List<PlaceResultDTO> findVegetarianRestaurantNearby(double lat, double lng, int radiusMetres);
     String fetchPhotoUri(String photoName, int maxWidth);
+    PlaceMoreDetailsDTO fetchMoreRestaurantDetails(String placeId);
 }
